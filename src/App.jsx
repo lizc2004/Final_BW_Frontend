@@ -5,6 +5,7 @@ import Clienti from './components/pages/Clienti/Clienti'
 import Fatture from './components/pages/Fatture/Fatture'
 import StatiFattura from './components/pages/StatiFattura/StatiFattura'
 import ContattoClienti from './components/pages/ContattoClienti/ContattoClienti'
+import Utenti from './components/pages/Utenti/Utenti'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/fatture" element={<Fatture />} />
       <Route path="/stati-fattura" element={<StatiFattura />} />
       <Route path="/invia-email" element={<ContattoClienti />} />
+      <Route path="/utenti" element={<Utenti />} />
     </Routes>
   )
 }
