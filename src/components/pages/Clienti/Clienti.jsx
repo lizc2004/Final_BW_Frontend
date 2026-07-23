@@ -7,8 +7,11 @@ import {
   Table,
 } from "react-bootstrap";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 export default function Clienti() {
+  const navigate = useNavigate();
+
   const [clienti, setClienti] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errore, setErrore] = useState("");
@@ -151,7 +154,11 @@ export default function Clienti() {
           <option value="provincia|desc">Provincia Z-A</option>
         </Form.Select>
 
-        <Button variant="success">
+        <Button
+          type="button"
+          variant="success"
+          onClick={() => navigate("/clienti/nuovo")}
+        >
           <BsPlusLg className="me-2" />
           Nuovo cliente
         </Button>
@@ -171,14 +178,13 @@ export default function Clienti() {
               <th>Fatturato annuo</th>
               <th>Data inserimento</th>
               <th>Ultimo contatto</th>
-              <th></th>
             </tr>
           </thead>
 
           <tbody>
             {clienti.length === 0 ? (
               <tr>
-                <td colSpan={5} className="text-center py-4">
+                <td colSpan={4} className="text-center py-4">
                   Nessun cliente trovato
                 </td>
               </tr>
@@ -186,13 +192,8 @@ export default function Clienti() {
               clienti.map((cliente) => (
                 <tr key={cliente.id}>
                   <td>{cliente.ragioneSociale}</td>
-
-                  <td>
-                    {formattaFatturato(cliente.fatturatoAnnuale)}
-                  </td>
-
+                  <td>{formattaFatturato(cliente.fatturatoAnnuale)}</td>
                   <td>{formattaData(cliente.dataInserimento)}</td>
-
                   <td>{formattaData(cliente.dataUltimoContatto)}</td>
                 </tr>
               ))
