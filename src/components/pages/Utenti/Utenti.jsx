@@ -1,7 +1,8 @@
 import "./Utenti.css"
 
 import { useEffect, useState } from "react"
-import { getMyProfile } from "../api/utenteApi"
+import { getMyProfile } from "../../../Api/utenteApi"
+import { updateMe } from "../../../Api/utenteApi"
 
 export default function Profilo() {
   const [utente, setUtente] = useState(null)
