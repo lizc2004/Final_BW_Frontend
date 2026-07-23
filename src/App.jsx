@@ -19,7 +19,7 @@ function App() {
     //   <Route path="/utenti" element={<Utenti />} />
     // </Routes>
 
-    <UtentiTest />
+    <Utenti />
   )
 }
 
