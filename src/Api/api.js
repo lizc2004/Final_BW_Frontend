@@ -1,7 +1,7 @@
 const BASE_URL = import.meta.env.VITE_API_URL
 
 export async function apiRequest(endpoint, options = {}) {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("accessToken")
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -16,5 +16,6 @@ export async function apiRequest(endpoint, options = {}) {
   if (!response.ok) {
     throw new Error(data.message || "Errore nella richiesta")
   }
+  console.log(data)
   return data
 }

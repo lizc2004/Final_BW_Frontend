@@ -30,7 +30,6 @@ export default function Clienti() {
   const [ricerca, setRicerca] = useState("");
 
 
-
   /* USE EFFECT */
 
   /* Viene eseguito una sola volta all'apertura della pagina.

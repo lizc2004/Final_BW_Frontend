@@ -1,2 +1,85 @@
-.login {
+/* SFONDI E COLORI */
+.login-wrapper {
+  background-color: #f6f6f2;
+}
+
+.left-panel {
+  background-color: #0f2e23;
+}
+
+.right-panel {
+  background-color: #f6f6f2;
+}
+
+/* LOGO E GRAFICA */
+.logo-icon {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #a3e635, #10b981);
+  border-radius: 6px;
+}
+
+.tagline {
+  color: #a3b18a;
+  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+}
+
+.subtitle {
+  color: #a3b18a;
+}
+
+/* INPUT E BOTTONI CUSTOM */
+.custom-input {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 0.95rem;
+}
+
+.custom-input:focus {
+  border-color: #2a8d67;
+  box-shadow: 0 0 0 0.25rem rgba(42, 141, 103, 0.15);
+}
+
+.btn-brand {
+  background-color: #2a8d67 !important;
+  border-color: #2a8d67 !important;
+  border-radius: 8px;
+}
+
+.btn-brand:hover {
+  background-color: #217353 !important;
+  border-color: #217353 !important;
+}
+
+.brand-link {
+  color: #2a8d67;
+}
+
+.brand-link:hover {
+  color: #217353;
+}
+
+/* DEMO BUTTONS */
+.btn-demo {
+  border-color: #e0e0e0;
+  background-color: #ffffff;
+  color: #333333;
+  border-radius: 8px;
+}
+
+.btn-demo:hover {
+  border-color: #2a8d67;
+  color: #2a8d67;
+  background-color: #ffffff;
+}
+
+/* UTILITY UTILS */
+.extra-small {
+  font-size: 0.7rem;
+}
+
+.tracking-wider {
+  letter-spacing: 1px;
 }

@@ -1,15 +1,14 @@
-// Importo useState per memorizzare il ruolo selezionato
-import { useState } from "react";
-
-// Outlet mostra il contenuto della pagina corrispondente alla route corrente
-import { Outlet } from "react-router-dom";
+// importo Outlet da React Router
+// Outlet rappresenta la pagina interna da visualizzare
+import { Outlet } from "react-router-dom"
+import { useState } from "react"
 
 // Importo Sidebar e Navbar
-import Sidebar from "../layout/Sidebar";
-import Navbar from "../layout/Navbar";
+import Sidebar from "../layout/Sidebar"
+import Navbar from "../layout/Navbar"
 
 // Importo il CSS del layout
-import "./DashboardLayout.css";
+import "./DashboardLayout.css"
 
 const DashboardLayout = () => {
   /*
@@ -18,7 +17,7 @@ const DashboardLayout = () => {
    * Il valore iniziale è "admin", quindi quando il gestionale
    * viene aperto vengono mostrate tutte le voci della Sidebar.
    */
-  const [role, setRole] = useState("admin");
+  const [role, setRole] = useState("admin")
 
   return (
     <div className="dashboard-layout">
@@ -53,7 +52,7 @@ const DashboardLayout = () => {
         </main>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout
