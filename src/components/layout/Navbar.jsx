@@ -1,90 +1,109 @@
-// importo useLocation per conoscere la pagina corrente
+// useLocation permette di conoscere l'indirizzo della pagina corrente
 import { useLocation } from "react-router-dom";
 
+// Importo i componenti React Bootstrap utilizzati nella Navbar
 import {
   Container,
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
 
+// Importo il CSS della Navbar
 import "./Navbar.css";
 
-const Navbar = () => {
-
-  // recupero la route corrente
+/*
+ * La Navbar riceve dal DashboardLayout:
+ *
+ * role     → il ruolo attualmente selezionato
+ * setRole  → la funzione per modificare il ruolo
+ */
+const Navbar = ({ role, setRole }) => {
+  /*
+   * useLocation restituisce informazioni sulla route corrente.
+   *
+   * location.pathname può contenere, per esempio:
+   * "/clienti"
+   * "/fatture"
+   * "/stati-fattura"
+   * "/invia-email"
+   */
   const location = useLocation();
 
-  // oggetto che associa ad ogni pagina
-  // il relativo titolo e sottotitolo
+  /*
+   * Oggetto che associa ogni pathname
+   * al titolo e al sottotitolo da mostrare nella Navbar.
+   */
   const pageInfo = {
     "/clienti": {
       title: "Clienti",
-      subtitle: "Anagrafica clienti business",
+      subtitle: "Gestisci i clienti dell'azienda",
     },
 
     "/fatture": {
       title: "Fatture",
-      subtitle: "Gestione delle fatture",
+      subtitle: "Consulta e gestisci le fatture",
     },
 
     "/stati-fattura": {
       title: "Stati fattura",
-      subtitle: "Gestione degli stati delle fatture",
+      subtitle: "Gestisci gli stati disponibili per le fatture",
     },
 
     "/invia-email": {
       title: "Contatta cliente",
-      subtitle: "Invio email ai clienti",
+      subtitle: "Invia comunicazioni ai clienti",
     },
   };
 
-  // recupero le informazioni della pagina corrente
-  // se la pagina non esiste utilizzo dei valori di default
-  const currentPage =
-    pageInfo[location.pathname] || {
-      title: "EPIC Energy CRM",
-      subtitle: "Dashboard",
-    };
+  /*
+   * Cerco le informazioni della pagina corrente.
+   *
+   * Se il pathname non è presente nell'oggetto pageInfo,
+   * viene utilizzato il valore di fallback.
+   */
+  const currentPage = pageInfo[location.pathname] || {
+    title: "EPIC Energy CRM",
+    subtitle: "Dashboard gestionale",
+  };
 
   return (
-
-    // barra superiore della dashboard
-    <header className="navbar-custom">
-
+    <header className="navbar-custom d-flex align-items-center">
+      {/*
+       * Container fluid occupa tutta la larghezza disponibile.
+       */}
       <Container
         fluid
-        className="h-100 d-flex justify-content-between align-items-center"
+        className="d-flex justify-content-between align-items-center"
       >
-
-        {/* Titolo e sottotitolo della pagina */}
+        {/* Titolo e sottotitolo della pagina corrente */}
         <div>
-
-          <h4 className="fw-bold mb-1">
-            {currentPage.title}
-          </h4>
+          <h1 className="h4 mb-1">{currentPage.title}</h1>
 
           <p className="navbar-subtitle mb-0">
             {currentPage.subtitle}
           </p>
-
         </div>
 
-        {/* Selettore del ruolo */}
-        <div className="role-switch d-flex align-items-center gap-3">
+        {/* Area per la selezione del ruolo */}
+        <div className="role-switch">
+          <span className="role-label">Ruolo</span>
 
-          {/* Etichetta del selettore */}
-          <span className="role-label">
-            Ruolo
-          </span>
-
-          {/* Pulsanti per cambiare ruolo */}
+          {/*
+           * ToggleButtonGroup è controllato attraverso lo stato role.
+           *
+           * value={role}
+           * indica quale pulsante è selezionato.
+           *
+           * onChange={setRole}
+           * aggiorna lo stato quando l'utente sceglie un ruolo.
+           */}
           <ToggleButtonGroup
             type="radio"
             name="role"
-            defaultValue="admin"
+            value={role}
+            onChange={setRole}
           >
-
-            {/* Ruolo amministratore */}
+            {/* Pulsante Admin */}
             <ToggleButton
               id="role-admin"
               value="admin"
@@ -93,7 +112,7 @@ const Navbar = () => {
               Admin
             </ToggleButton>
 
-            {/* Ruolo operatore */}
+            {/* Pulsante Operatore */}
             <ToggleButton
               id="role-operator"
               value="operator"
@@ -101,17 +120,11 @@ const Navbar = () => {
             >
               Operatore
             </ToggleButton>
-
           </ToggleButtonGroup>
-
         </div>
-
       </Container>
-
     </header>
-
   );
 };
 
-// esporto il componente
 export default Navbar;

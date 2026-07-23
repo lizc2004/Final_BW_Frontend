@@ -1,28 +1,59 @@
+/* Sidebar */
 .sidebar {
   width: 260px;
   min-height: 100vh;
-  background: #184d47;
+
+  padding: 24px;
+
+  background-color: #184d47;
   color: white;
 }
 
+/* Link della Sidebar */
 .sidebar-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 15px;
-  border-radius: 10px;
+  padding: 12px 16px;
+
+  border-radius: 8px;
+
   color: white;
   text-decoration: none;
-  transition: 0.2s;
+
+  transition: background-color 0.2s ease;
 }
 
+/* Effetto hover */
 .sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.15);
+
   color: white;
 }
 
+/* Link della pagina attiva */
 .active-link {
-  background: white;
+  background-color: white;
+
   color: #184d47 !important;
+
   font-weight: 600;
+}
+
+/* Icone dei link */
+.sidebar-link svg {
+  font-size: 1.1rem;
+}
+
+/* Titolo del gestionale */
+.sidebar h2 {
+  font-weight: 700;
+}
+
+/* Sottotitolo */
+.sidebar p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Pulsante Esci */
+.sidebar .btn {
+  border-radius: 8px;
+  font-weight: 500;
 }
