@@ -1,7 +1,4 @@
-// Importa gli hook di React.
 import { useEffect, useState } from "react";
-
-// Importa i componenti di React Bootstrap.
 import {
   Button,
   Form,
@@ -9,231 +6,200 @@ import {
   Spinner,
   Table,
 } from "react-bootstrap";
-
-// Importa le icone.
-import {
-  BsPlusLg,
-  BsSearch,
-} from "react-icons/bs";
+import { BsPlusLg, BsSearch } from "react-icons/bs";
 
 export default function Clienti() {
-
-  /* STATE  */
-
-  // Contiene tutti i clienti recuperati dal backend.
   const [clienti, setClienti] = useState([]);
-
-  // Indica se il caricamento è ancora in corso.
   const [loading, setLoading] = useState(true);
+  const [errore, setErrore] = useState("");
+  const [nome, setNome] = useState("");
+  const [ordinamento, setOrdinamento] = useState("");
 
-  // Contiene il testo scritto nella barra di ricerca.
-  const [ricerca, setRicerca] = useState("");
-
-
-  /* USE EFFECT */
-
-  /* Viene eseguito una sola volta all'apertura della pagina.
-   * Recupera tutti i clienti dal backend.
-   */
   useEffect(() => {
     caricaClienti();
   }, []);
 
+  async function fetchClienti(url) {
+    setLoading(true);
+    setErrore("");
 
-
-  /* FETCH CLIENTI */
-
-  async function caricaClienti() {
+    const token = localStorage.getItem("accessToken");
 
     try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      // Recupera il token salvato dopo il login.
-      const token = localStorage.getItem("token");
-
-      // Chiamata al backend.
-      const response = await fetch(
-        "http://localhost:8080/clienti",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Se la risposta non è valida
-      // viene generato un errore.
       if (!response.ok) {
-        throw new Error("Errore durante il recupero dei clienti.");
+        throw new Error(`Errore ${response.status}`);
       }
 
-      // Converte il JSON in oggetto JavaScript.
       const data = await response.json();
-
-      // Salva i clienti nello state.
       setClienti(data);
-
     } catch (error) {
-
       console.error(error);
-
+      setErrore("Impossibile recuperare i clienti.");
     } finally {
-
-      // Nasconde lo spinner.
       setLoading(false);
-
     }
-
   }
 
+  function caricaClienti() {
+    fetchClienti("http://localhost:8080/clienti");
+  }
 
+  function cercaClienti(event) {
+    event.preventDefault();
 
-  /* RICERCA CLIENTI  */
+    if (!nome.trim()) {
+      caricaClienti();
+      return;
+    }
 
-  /* Filtra la lista dei clienti in base alla ragione sociale. */
-  const clientiFiltrati = clienti.filter((cliente) =>
-    cliente.ragioneSociale
-      ?.toLowerCase()
-      .includes(ricerca.toLowerCase())
-  );
+    const parametro = encodeURIComponent(nome.trim());
 
+    fetchClienti(
+      `http://localhost:8080/clienti/filtro?ragioneSociale=${parametro}`
+    );
+  }
 
+  function ordinaClienti(event) {
+    const valore = event.target.value;
+    setOrdinamento(valore);
 
-  /* RENDER */
+    if (!valore) {
+      caricaClienti();
+      return;
+    }
+
+    const [campo, direzione] = valore.split("|");
+
+    fetchClienti(
+      `http://localhost:8080/clienti/ordinamento?campo=${campo}&direzione=${direzione}`
+    );
+  }
+
+  function formattaFatturato(valore) {
+    if (valore === null || valore === undefined) {
+      return "-";
+    }
+
+    return new Intl.NumberFormat("it-IT", {
+      style: "currency",
+      currency: "EUR",
+      maximumFractionDigits: 0,
+    }).format(valore);
+  }
+
+  function formattaData(data) {
+    if (!data) {
+      return "-";
+    }
+
+    return new Date(data).toLocaleDateString("it-IT");
+  }
 
   return (
+    <section className="p-4">
+      <div className="d-flex flex-wrap gap-3 align-items-center mb-4">
+        <Form
+          onSubmit={cercaClienti}
+          style={{
+            minWidth: "280px",
+            flex: 1,
+          }}
+        >
+          <InputGroup>
+            <InputGroup.Text>
+              <BsSearch />
+            </InputGroup.Text>
 
-    <div className="p-4">
+            <Form.Control
+              type="text"
+              placeholder="Cerca cliente..."
+              value={nome}
+              onChange={(event) => setNome(event.target.value)}
+            />
+          </InputGroup>
+        </Form>
 
-      {/* TOOLBAR */}
-
-      <div className="d-flex justify-content-between align-items-center mb-4">
-
-        {/* Barra di ricerca */}
-
-        <InputGroup style={{ maxWidth: "350px" }}>
-
-          <InputGroup.Text>
-            <BsSearch />
-          </InputGroup.Text>
-
-          <Form.Control
-            placeholder="Cerca cliente..."
-            value={ricerca}
-            onChange={(e) =>
-              setRicerca(e.target.value)
-            }
-          />
-
-        </InputGroup>
-
-
-
-        {/* Pulsante Nuovo Cliente */}
+        <Form.Select
+          value={ordinamento}
+          onChange={ordinaClienti}
+          style={{ maxWidth: "230px" }}
+        >
+          <option value="">Ordina per</option>
+          <option value="nome|asc">Nome A-Z</option>
+          <option value="nome|desc">Nome Z-A</option>
+          <option value="fatturato|asc">Fatturato crescente</option>
+          <option value="fatturato|desc">Fatturato decrescente</option>
+          <option value="dataInserimento|asc">
+            Inserimento meno recente
+          </option>
+          <option value="dataInserimento|desc">
+            Inserimento più recente
+          </option>
+          <option value="dataUltimoContatto|asc">
+            Contatto meno recente
+          </option>
+          <option value="dataUltimoContatto|desc">
+            Contatto più recente
+          </option>
+          <option value="provincia|asc">Provincia A-Z</option>
+          <option value="provincia|desc">Provincia Z-A</option>
+        </Form.Select>
 
         <Button variant="success">
-
           <BsPlusLg className="me-2" />
-
-          Nuovo Cliente
-
+          Nuovo cliente
         </Button>
-
       </div>
 
-
-
-      {/* TABELLA */}
+      {errore && <div className="alert alert-danger">{errore}</div>}
 
       {loading ? (
-
-        // Spinner mostrato durante il caricamento.
-
-        <div className="text-center mt-5">
-
+        <div className="text-center py-5">
           <Spinner animation="border" />
-
         </div>
-
       ) : (
-
-        <Table
-          striped
-          hover
-          bordered
-          responsive
-        >
-
+        <Table hover responsive className="align-middle">
           <thead>
-
             <tr>
-
-              <th>ID</th>
-
-              <th>Ragione Sociale</th>
-
-              <th>Email</th>
-
-              <th>Telefono</th>
-
-              <th>Fatturato</th>
-
+              <th>Ragione sociale</th>
+              <th>Fatturato annuo</th>
+              <th>Data inserimento</th>
+              <th>Ultimo contatto</th>
+              <th></th>
             </tr>
-
           </thead>
 
           <tbody>
-
-            {/* Se non esistono clienti */}
-
-            {clientiFiltrati.length === 0 ? (
-
+            {clienti.length === 0 ? (
               <tr>
-
-                <td
-                  colSpan={5}
-                  className="text-center"
-                >
-
+                <td colSpan={5} className="text-center py-4">
                   Nessun cliente trovato
-
                 </td>
-
               </tr>
-
             ) : (
-
-              /*
-               * Crea una riga
-               * per ogni cliente.
-               */
-              clientiFiltrati.map((cliente) => (
-
+              clienti.map((cliente) => (
                 <tr key={cliente.id}>
-
-                  <td>{cliente.id}</td>
-
                   <td>{cliente.ragioneSociale}</td>
 
-                  <td>{cliente.email}</td>
+                  <td>
+                    {formattaFatturato(cliente.fatturatoAnnuale)}
+                  </td>
 
-                  <td>{cliente.telefono}</td>
+                  <td>{formattaData(cliente.dataInserimento)}</td>
 
-                  <td>{cliente.fatturatoAnnuale}</td>
-
+                  <td>{formattaData(cliente.dataUltimoContatto)}</td>
                 </tr>
-
               ))
-
             )}
-
           </tbody>
-
         </Table>
-
       )}
-
-    </div>
-
+    </section>
   );
-
 }
