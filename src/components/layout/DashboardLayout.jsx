@@ -1,49 +1,26 @@
-<<<<<<< HEAD
 // importo Outlet da React Router
 // Outlet rappresenta la pagina interna da visualizzare
 import { Outlet } from "react-router-dom"
-
+import { useState } from "react"
 // importo i componenti del layout
 import Sidebar from "./Sidebar"
 import Navbar from "./Navbar"
 
 // importo il CSS
 import "./DashboardLayout.css"
-=======
-// Importo useState per memorizzare il ruolo selezionato
-import { useState } from "react";
-
-// Outlet mostra il contenuto della pagina corrispondente alla route corrente
-import { Outlet } from "react-router-dom";
-
-import Sidebar from "../layout/Sidebar";
-import Navbar from "../layout/Navbar";
-
-import "./DashboardLayout.css";
->>>>>>> develop
 
 const DashboardLayout = () => {
-  {/* Stato che contiene il ruolo selezionato.
-  * Il valore iniziale è "admin", quindi quando il gestionale
-  * viene aperto vengono mostrate tutte le voci della Sidebar.
-  */}
+  {
+    /* Stato che contiene il ruolo selezionato.
+     * Il valore iniziale è "admin", quindi quando il gestionale
+     * viene aperto vengono mostrate tutte le voci della Sidebar.
+     */
+  }
 
-  const [role, setRole] = useState("admin");
+  const [role, setRole] = useState("admin")
 
   return (
     <div className="dashboard-layout">
-<<<<<<< HEAD
-      {/* barra laterale visibile in tutte le pagine */}
-      <Sidebar />
-
-      {/* parte destra della dashboard */}
-      <div className="dashboard-content">
-        {/* barra superiore visibile in tutte le pagine */}
-        <Navbar />
-
-        {/* qui verrà mostrata la pagina selezionata */}
-        <main className="dashboard-main, p-0, m-0, mt-3">
-=======
       {/*
        * Passo il ruolo alla Sidebar.
        *
@@ -57,7 +34,7 @@ const DashboardLayout = () => {
         // role     → il ruolo attualmente selezionato
         // setRole  → la funzione che permette di cambiarlo
         */}
-  
+
         <Navbar role={role} setRole={setRole} />
 
         {/*
@@ -69,7 +46,6 @@ const DashboardLayout = () => {
          * /fatture  → mostra il componente Fatture
          */}
         <main className="dashboard-main">
->>>>>>> develop
           <Outlet />
         </main>
       </div>
