@@ -34,26 +34,36 @@ const Navbar = ({ role, setRole }) => {
    * al titolo e al sottotitolo da mostrare nella Navbar.
    */
   const pageInfo = {
-    "/clienti": {
-      title: "Clienti",
-      subtitle: "Gestisci i clienti dell'azienda",
-    },
+  "/panoramica": {
+    title: "Panoramica",
+    subtitle: "Riepilogo generale del gestionale",
+  },
 
-    "/fatture": {
-      title: "Fatture",
-      subtitle: "Consulta e gestisci le fatture",
-    },
+  "/clienti": {
+    title: "Clienti",
+    subtitle: "Gestisci i clienti dell'azienda",
+  },
 
-    "/stati-fattura": {
-      title: "Stati fattura",
-      subtitle: "Gestisci gli stati disponibili per le fatture",
-    },
+  "/fatture": {
+    title: "Fatture",
+    subtitle: "Consulta e gestisci le fatture",
+  },
 
-    "/invia-email": {
-      title: "Contatta cliente",
-      subtitle: "Invia comunicazioni ai clienti",
-    },
-  };
+  "/stati-fattura": {
+    title: "Stati fattura",
+    subtitle: "Gestisci gli stati disponibili per le fatture",
+  },
+
+  "/utenti": {
+    title: "Utenti",
+    subtitle: "Gestisci gli utenti e i relativi ruoli",
+  },
+
+  "/invia-email": {
+    title: "Contatta cliente",
+    subtitle: "Invia comunicazioni ai clienti",
+  },
+};
 
   /*
    * Cerco le informazioni della pagina corrente.

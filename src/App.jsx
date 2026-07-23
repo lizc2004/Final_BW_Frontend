@@ -22,6 +22,7 @@ function App() {
         <Route path="clienti" element={<Clienti />} />
         <Route path="fatture" element={<Fatture />} />
         <Route path="stati-fattura" element={<StatiFattura />} />
+        <Route path="utenti" element={<Utenti />} />
         <Route path="invia-email" element={<ContattoClienti />} />
         <Route path="utenti" element={<Utenti />} />
       </Route>
