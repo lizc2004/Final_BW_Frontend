@@ -3,7 +3,7 @@ import "./Utenti.css"
 import { useEffect, useState } from "react"
 import { getAllUtenti, getMyProfile } from "../../../Api/utenteApi"
 import { updateMe } from "../../../Api/utenteApi"
-import { Col, Container, Row, Table } from "react-bootstrap"
+import { Col, Container, Pagination, Row, Table } from "react-bootstrap"
 import { Modal, Button } from "react-bootstrap"
 import { addRole, removeRole } from "../../../Api/utenteApi"
 
@@ -11,6 +11,8 @@ const Utenti = () => {
   const [utenti, setUtenti] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [utenteSelezionato, setUtenteSelezionato] = useState(null)
+  const [pagina, setPagina] = useState(0)
+  const [totalePagine, setTotalePagine] = useState(0)
 
   const apriGestioneRuoli = (utente) => {
     setUtenteSelezionato(utente)
@@ -22,15 +24,19 @@ const Utenti = () => {
     setUtenteSelezionato(null)
   }
 
-  useEffect(() => {
-    getAllUtenti()
+  const caricaUtenti = (page) => {
+    getAllUtenti(page)
       .then((data) => {
         setUtenti(data.content)
+        setPagina(data.number)
+        setTotalePagine(data.totalPages)
       })
-      .catch((error) => {
-        console.error(error)
-      })
-  }, [])
+      .catch(console.error)
+  }
+
+  useEffect(() => {
+    caricaUtenti(pagina)
+  }, [pagina])
 
   if (!utenti) return <h2>Caricamento...</h2>
 
@@ -96,7 +102,7 @@ const Utenti = () => {
                 </td>
                 <td>
                   <Button
-                    variant="primary"
+                    variant="success"
                     onClick={() => apriGestioneRuoli(utente)}
                   >
                     Gestisci Ruoli
@@ -107,6 +113,28 @@ const Utenti = () => {
           </tbody>
         </Table>
       </Container>
+
+      <Pagination className="justify-content-center mt-4">
+        <Pagination.Prev
+          disabled={pagina === 0}
+          onClick={() => setPagina(pagina - 1)}
+        />
+
+        {[...Array(totalePagine).keys()].map((num) => (
+          <Pagination.Item
+            key={num}
+            active={num === pagina}
+            onClick={() => setPagina(num)}
+          >
+            {num + 1}
+          </Pagination.Item>
+        ))}
+
+        <Pagination.Next
+          disabled={pagina === totalePagine - 1}
+          onClick={() => setPagina(pagina + 1)}
+        />
+      </Pagination>
 
       <Modal show={showModal} onHide={chiudiModal} centered>
         <Modal.Header closeButton>
@@ -140,7 +168,7 @@ const Utenti = () => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={chiudiModal}>
+          <Button variant="success" onClick={chiudiModal}>
             Chiudi
           </Button>
         </Modal.Footer>
