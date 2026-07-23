@@ -35,63 +35,37 @@ export default function Profilo() {
           </Col>
         </Row>
       </Container>
-      <Container fluid className="bg-primary">
-        <div>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>UTENTE</th>
-                <th>USERNAME</th>
-                <th>EMAIL</th>
-                <th>RUOLI</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <p>
-                    Nome:
-                    {utente.nome}
-                  </p>
-                </td>
-                <td>
-                  <p>
-                    Username:
-                    {utente.username}
-                  </p>
-                </td>
-                <td>
-                  <p>
-                    Email:
-                    {utente.email}
-                  </p>
-                </td>
-                <td>@mdo</td>
-              </tr>
-            </tbody>
-          </Table>
-
-          {utente && (
-            <>
-              <p>
-                Username:
-                {utente.username}
-              </p>
-
-              <p>
-                Email:
-                {utente.email}
-              </p>
-
-              <p>
-                Nome:
-                {utente.nome}
-              </p>
-
-              <button onClick={modifica}>Modifica nome</button>
-            </>
-          )}
-        </div>
+      <Container fluid className="mw-100 p-0">
+        <Table striped hover className="p-0">
+          <thead>
+            <tr>
+              <th>UTENTE</th>
+              <th>USERNAME</th>
+              <th>EMAIL</th>
+              <th>RUOLI</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <p>{utente.nome}</p>
+              </td>
+              <td>
+                <p>{utente.username}</p>
+              </td>
+              <td>
+                <p>{utente.email}</p>
+              </td>
+              <td>
+                {utente.ruoli[0]?.nome}, {utente.ruoli[1]?.nome}
+              </td>
+              <td>
+                <button onClick={modifica}>Gestisci Ruoli</button>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
       </Container>
     </>
   )
