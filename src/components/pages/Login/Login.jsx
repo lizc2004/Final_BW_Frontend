@@ -41,7 +41,7 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("accessToken", data.token);
+        localStorage.setItem("accessToken", data.accessToken);
 
         setAlertInfo({
           show: true,

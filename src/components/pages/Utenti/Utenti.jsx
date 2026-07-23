@@ -1,70 +1,69 @@
-import "./Utenti.css"
+import "./Utenti.css";
 
-import { useEffect, useState } from "react"
-import { getAllUtenti, getMyProfile } from "../../../Api/utenteApi"
-import { updateMe } from "../../../Api/utenteApi"
-import { Col, Container, Row, Table } from "react-bootstrap"
-import { Modal, Button } from "react-bootstrap"
-import { addRole, removeRole } from "../../../Api/utenteApi"
+import { useEffect, useState } from "react";
+import { getAllUtenti } from "../../../Api/utenteApi";
+import { Container, Table } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
+import { addRole, removeRole } from "../../../Api/utenteApi";
 
 const Utenti = () => {
-  const [utenti, setUtenti] = useState([])
-  const [showModal, setShowModal] = useState(false)
-  const [utenteSelezionato, setUtenteSelezionato] = useState(null)
+  const [utenti, setUtenti] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [utenteSelezionato, setUtenteSelezionato] = useState(null);
 
   const apriGestioneRuoli = (utente) => {
-    setUtenteSelezionato(utente)
-    setShowModal(true)
-  }
+    setUtenteSelezionato(utente);
+    setShowModal(true);
+  };
 
   const chiudiModal = () => {
-    setShowModal(false)
-    setUtenteSelezionato(null)
-  }
+    setShowModal(false);
+    setUtenteSelezionato(null);
+  };
 
   useEffect(() => {
     getAllUtenti()
       .then((data) => {
-        setUtenti(data.content)
+        setUtenti(data.content);
       })
       .catch((error) => {
-        console.error(error)
-      })
-  }, [])
+        console.error(error);
+      });
+  }, []);
 
-  if (!utenti) return <h2>Caricamento...</h2>
+  if (!utenti) return <h2>Caricamento...</h2>;
 
-  const ADMIN_ROLE_ID = 2
+  const ADMIN_ROLE_ID = 2;
 
   const isAdmin = utenteSelezionato?.ruoli.some(
     (ruolo) => ruolo.nome === "ROLE_ADMIN",
-  )
+  );
 
   const handleAddAdmin = async () => {
     try {
-      await addRole(utenteSelezionato.id, ADMIN_ROLE_ID)
+      await addRole(utenteSelezionato.id, ADMIN_ROLE_ID);
 
-      const utentiAggiornati = await getAllUtenti()
-      setUtenti(utentiAggiornati.content)
+      const utentiAggiornati = await getAllUtenti();
+      setUtenti(utentiAggiornati.content);
 
-      setShowModal(false)
+      setShowModal(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   const handleRemoveAdmin = async () => {
     try {
-      await removeRole(utenteSelezionato.id, ADMIN_ROLE_ID)
+      await removeRole(utenteSelezionato.id, ADMIN_ROLE_ID);
 
-      const utentiAggiornati = await getAllUtenti()
-      setUtenti(utentiAggiornati.content)
+      const utentiAggiornati = await getAllUtenti();
+      setUtenti(utentiAggiornati.content);
 
-      setShowModal(false)
+      setShowModal(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   return (
     <>
@@ -146,7 +145,7 @@ const Utenti = () => {
         </Modal.Footer>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default Utenti
+export default Utenti;
