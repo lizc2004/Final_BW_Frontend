@@ -23,29 +23,33 @@ export default function Profilo() {
     })
   }
   return (
-    <div>
-      <h1>Test Utente</h1>
+    <>
+      <div className="bg-white">
+        <h1>Utenti</h1>
+        <p>Gestione utenti e ruoli</p>
+      </div>
+      <div>
+        {utente && (
+          <>
+            <p>
+              Username:
+              {utente.username}
+            </p>
 
-      {utente && (
-        <>
-          <p>
-            Username:
-            {utente.username}
-          </p>
+            <p>
+              Email:
+              {utente.email}
+            </p>
 
-          <p>
-            Email:
-            {utente.email}
-          </p>
+            <p>
+              Nome:
+              {utente.nome}
+            </p>
 
-          <p>
-            Nome:
-            {utente.nome}
-          </p>
-
-          <button onClick={modifica}>Modifica nome</button>
-        </>
-      )}
-    </div>
+            <button onClick={modifica}>Modifica nome</button>
+          </>
+        )}
+      </div>
+    </>
   )
 }
