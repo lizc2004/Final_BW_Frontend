@@ -1,5 +1,5 @@
 // useLocation permette di conoscere l'indirizzo della pagina corrente
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Importo i componenti React Bootstrap utilizzati nella Navbar
 import {
@@ -28,6 +28,8 @@ const Navbar = ({ role, setRole }) => {
    * "/invia-email"
    */
   const location = useLocation();
+
+  const navigate = useNavigate();
 
   /*
    * Oggetto che associa ogni pathname
@@ -76,6 +78,16 @@ const Navbar = ({ role, setRole }) => {
     subtitle: "Dashboard gestionale",
   };
 
+  /* questa funzione viene eseguita quando cambia il ruolo */
+  const handleRoleChange = (selectedRole) => {
+    // aggiorno il ruolo selezionato
+    setRole(selectedRole);
+    // quando viene selezionato operatore, riporta alla pagina clienti
+    if (selectedRole === "operator"){
+      navigate("/clienti");
+    }
+  }
+
   return (
     <header className="navbar-custom d-flex align-items-center">
       {/*
@@ -111,7 +123,7 @@ const Navbar = ({ role, setRole }) => {
             type="radio"
             name="role"
             value={role}
-            onChange={setRole}
+            onChange={handleRoleChange}
           >
             {/* Pulsante Admin */}
             <ToggleButton
