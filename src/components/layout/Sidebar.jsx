@@ -1,30 +1,38 @@
 // NavLink permette di navigare tra le pagine
-// e riconosce automaticamente il link attivo
+// e riconosce automaticamente il collegamento attivo
 import { NavLink } from "react-router-dom";
 
+// Importo le icone utilizzate nella Sidebar
 import {
   BsPeople,
   BsReceipt,
+  BsPersonGear,
   BsTags,
   BsEnvelope,
   BsBoxArrowLeft,
 } from "react-icons/bs";
 
+// Importo il componente Button di React Bootstrap
 import { Button } from "react-bootstrap";
 
+// Importo il CSS della Sidebar
 import "./Sidebar.css";
 
 /*
- * La Sidebar riceve il ruolo selezionato
+ * La Sidebar riceve la proprietà role
  * dal componente DashboardLayout.
+ *
+ * role può essere:
+ * "admin"
+ * "operator"
  */
 const Sidebar = ({ role }) => {
   /*
-   * Funzione utilizzata per assegnare le classi ai NavLink.
+   * Funzione che assegna le classi CSS ai NavLink.
    *
-   * React Router passa automaticamente la proprietà isActive.
-   *
-   * Se il link è attivo aggiungiamo la classe "active-link".
+   * React Router passa automaticamente isActive.
+   * Se il link corrisponde alla pagina corrente,
+   * viene aggiunta la classe active-link.
    */
   const getLinkClass = ({ isActive }) =>
     `sidebar-link d-flex align-items-center gap-3 ${
@@ -42,14 +50,12 @@ const Sidebar = ({ role }) => {
         </p>
       </div>
 
-      {/*
-       * Navigazione principale.
-       *
-       * Clienti e Fatture sono visibili
-       * sia all'Admin sia all'Operatore.
-       */}
+      {/* Navigazione principale della Sidebar */}
       <nav className="d-flex flex-column gap-2">
-        {/* Collegamento alla pagina Clienti */}
+        {/*
+         * Clienti è visibile sia all'Admin
+         * sia all'Operatore.
+         */}
         <NavLink
           to="/clienti"
           className={getLinkClass}
@@ -59,7 +65,10 @@ const Sidebar = ({ role }) => {
           <span>Clienti</span>
         </NavLink>
 
-        {/* Collegamento alla pagina Fatture */}
+        {/*
+         * Fatture è visibile sia all'Admin
+         * sia all'Operatore.
+         */}
         <NavLink
           to="/fatture"
           className={getLinkClass}
@@ -70,12 +79,14 @@ const Sidebar = ({ role }) => {
         </NavLink>
 
         {/*
-         * Le pagine Stati fattura e Contatta cliente
-         * vengono mostrate soltanto quando il ruolo è "admin".
+         * Le voci contenute in questo blocco
+         * vengono mostrate soltanto all'Admin.
          */}
         {role === "admin" && (
           <>
-            {/* Collegamento alla gestione degli stati */}
+        
+
+            {/* Gestione degli stati delle fatture */}
             <NavLink
               to="/stati-fattura"
               className={getLinkClass}
@@ -85,7 +96,17 @@ const Sidebar = ({ role }) => {
               <span>Stati fattura</span>
             </NavLink>
 
-            {/* Collegamento alla pagina per inviare email */}
+              {/* Gestione degli utenti */}
+            <NavLink
+              to="/utenti"
+              className={getLinkClass}
+            >
+              <BsPersonGear />
+
+              <span>Utenti</span>
+            </NavLink>
+
+            {/* Pagina per inviare comunicazioni ai clienti */}
             <NavLink
               to="/invia-email"
               className={getLinkClass}

@@ -8,6 +8,7 @@ import Panoramica from "./components/pages/Panoramica/Panoramica";
 import Clienti from "./components/pages/Clienti/Clienti";
 import Fatture from "./components/pages/Fatture/Fatture";
 import StatiFattura from "./components/pages/StatiFattura/StatiFattura";
+import Utenti from "./components/pages/Utenti/Utenti";
 import ContattoClienti from "./components/pages/ContattoClienti/ContattoClienti";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="clienti" element={<Clienti />} />
         <Route path="fatture" element={<Fatture />} />
         <Route path="stati-fattura" element={<StatiFattura />} />
+        <Route path="utenti" element={<Utenti />} />
         <Route path="invia-email" element={<ContattoClienti />} />
       </Route>
 
