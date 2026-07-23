@@ -1,7 +1,6 @@
 .sidebar {
   width: 260px;
   min-height: 100vh;
-
   background: #184d47;
   color: white;
 }
@@ -10,14 +9,10 @@
   display: flex;
   align-items: center;
   gap: 12px;
-
   padding: 12px 15px;
-
   border-radius: 10px;
-
   color: white;
   text-decoration: none;
-
   transition: 0.2s;
 }
 

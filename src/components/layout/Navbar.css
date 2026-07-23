@@ -1,0 +1,49 @@
+/* Barra superiore della dashboard */
+.navbar-custom {
+  height: 90px;
+  padding: 0 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Sottotitolo della pagina */
+.navbar-subtitle {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Contenitore del selettore del ruolo */
+.role-switch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Etichetta "Ruolo" */
+.role-label {
+  color: #6c757d;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Pulsanti del selettore */
+.role-switch .btn {
+  min-width: 95px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* Pulsante selezionato */
+.role-switch .btn-check:checked + .btn {
+  background-color: #184d47;
+  border-color: #184d47;
+}
+
+/* Hover dei pulsanti */
+.role-switch .btn:hover {
+  background-color: #184d47;
+  border-color: #184d47;
+  color: #ffffff;
+}
