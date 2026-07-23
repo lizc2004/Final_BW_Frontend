@@ -31,16 +31,9 @@ export default function Clienti() {
 
 
 
-  /*
-   * ===============================
-   * USE EFFECT
-   * ===============================
-   */
+  /* USE EFFECT */
 
-  /*
-   * Viene eseguito una sola volta
-   * all'apertura della pagina.
-   *
+  /* Viene eseguito una sola volta all'apertura della pagina.
    * Recupera tutti i clienti dal backend.
    */
   useEffect(() => {
@@ -49,11 +42,7 @@ export default function Clienti() {
 
 
 
-  /*
-   * ===============================
-   * FETCH CLIENTI
-   * ===============================
-   */
+  /* FETCH CLIENTI */
 
   async function caricaClienti() {
 
@@ -99,16 +88,9 @@ export default function Clienti() {
 
 
 
-  /*
-   * ===============================
-   * RICERCA CLIENTI
-   * ===============================
-   */
+  /* RICERCA CLIENTI  */
 
-  /*
-   * Filtra la lista dei clienti
-   * in base alla ragione sociale.
-   */
+  /* Filtra la lista dei clienti in base alla ragione sociale. */
   const clientiFiltrati = clienti.filter((cliente) =>
     cliente.ragioneSociale
       ?.toLowerCase()
@@ -117,19 +99,13 @@ export default function Clienti() {
 
 
 
-  /*
-   * ===============================
-   * RENDER
-   * ===============================
-   */
+  /* RENDER */
 
   return (
 
     <div className="p-4">
 
-      {/* ==========================
-          TOOLBAR
-      ========================== */}
+      {/* TOOLBAR */}
 
       <div className="d-flex justify-content-between align-items-center mb-4">
 
@@ -167,9 +143,7 @@ export default function Clienti() {
 
 
 
-      {/* ==========================
-          TABELLA
-      ========================== */}
+      {/* TABELLA */}
 
       {loading ? (
 
