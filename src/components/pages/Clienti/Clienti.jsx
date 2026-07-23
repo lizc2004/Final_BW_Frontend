@@ -1,10 +1,18 @@
-import './Clienti.css'
+// pagina principale
+// contiene toolbar, tabella e pagination
 
-function Clienti() {
+import ClientiToolbar from "./ClientiToolbar"
+import ClientiTable from "./ClientiTable"
+import "./Clienti.css"
+
+const Clienti = () => {
   return (
-    <div className="clienti">
+    <section className="clienti-page">
       <h1>Clienti</h1>
-    </div>
+
+      <ClientiToolbar />
+      <ClientiTable />
+    </section>
   )
 }
 

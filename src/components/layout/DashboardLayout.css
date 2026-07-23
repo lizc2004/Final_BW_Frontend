@@ -1,0 +1,22 @@
+/* Contenitore principale dell'intera dashboard */
+.dashboard-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f4f6f9;
+}
+
+/* Parte destra: Navbar e pagina corrente */
+.dashboard-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenuto principale della pagina */
+.dashboard-main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}

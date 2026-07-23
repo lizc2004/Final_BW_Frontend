@@ -1,0 +1,59 @@
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+
+  padding: 24px;
+
+  background-color: #184d47;
+  color: white;
+}
+
+/* Link della Sidebar */
+.sidebar-link {
+  padding: 12px 16px;
+
+  border-radius: 8px;
+
+  color: white;
+  text-decoration: none;
+
+  transition: background-color 0.2s ease;
+}
+
+/* Effetto hover */
+.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+
+  color: white;
+}
+
+/* Link della pagina attiva */
+.active-link {
+  background-color: white;
+
+  color: #184d47 !important;
+
+  font-weight: 600;
+}
+
+/* Icone dei link */
+.sidebar-link svg {
+  font-size: 1.1rem;
+}
+
+/* Titolo del gestionale */
+.sidebar h2 {
+  font-weight: 700;
+}
+
+/* Sottotitolo */
+.sidebar p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Pulsante Esci */
+.sidebar .btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
