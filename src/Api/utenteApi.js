@@ -21,5 +21,5 @@ export const removeRole = (utenteId, ruoloId) =>
     method: "DELETE",
   })
 
-export const getAllUtenti = (page = 0, size = 5) =>
-  apiRequest(`/utenti?page=${page}&size=${size}`)
+export const getAllUtenti = (page = 0, size = 5, nome = "") =>
+  apiRequest(`/utenti?page=${page}&size=${size}&nome=${nome}`)
