@@ -2,12 +2,6 @@
 // Outlet rappresenta la pagina interna da visualizzare
 import { Outlet } from "react-router-dom"
 import { useState } from "react"
-// importo i componenti del layout
-import Sidebar from "./Sidebar"
-import Navbar from "./Navbar"
-
-// Outlet mostra il contenuto della pagina corrispondente alla route corrente
-import { Outlet } from "react-router-dom"
 
 // Importo Sidebar e Navbar
 import Sidebar from "../layout/Sidebar"
