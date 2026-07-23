@@ -13,6 +13,7 @@ const Utenti = () => {
   const [utenteSelezionato, setUtenteSelezionato] = useState(null)
   const [pagina, setPagina] = useState(0)
   const [totalePagine, setTotalePagine] = useState(0)
+  const [ricerca, setRicerca] = useState("")
 
   const apriGestioneRuoli = (utente) => {
     setUtenteSelezionato(utente)
@@ -25,7 +26,7 @@ const Utenti = () => {
   }
 
   const caricaUtenti = (page) => {
-    getAllUtenti(page)
+    getAllUtenti(page, 5, ricerca)
       .then((data) => {
         setUtenti(data.content)
         setPagina(data.number)
@@ -36,7 +37,7 @@ const Utenti = () => {
 
   useEffect(() => {
     caricaUtenti(pagina)
-  }, [pagina])
+  }, [pagina, ricerca])
 
   if (!utenti) return <h2>Caricamento...</h2>
 
@@ -50,7 +51,7 @@ const Utenti = () => {
     try {
       await addRole(utenteSelezionato.id, ADMIN_ROLE_ID)
 
-      const utentiAggiornati = await getAllUtenti()
+      const utentiAggiornati = await getAllUtenti(pagina, 10, ricerca)
       setUtenti(utentiAggiornati.content)
 
       setShowModal(false)
@@ -63,7 +64,7 @@ const Utenti = () => {
     try {
       await removeRole(utenteSelezionato.id, ADMIN_ROLE_ID)
 
-      const utentiAggiornati = await getAllUtenti()
+      const utentiAggiornati = await getAllUtenti(pagina, 10, ricerca)
       setUtenti(utentiAggiornati.content)
 
       setShowModal(false)
@@ -75,6 +76,16 @@ const Utenti = () => {
   return (
     <>
       <Container fluid className="mw-100 p-0">
+        <input
+          type="text"
+          className="form-control mb-3"
+          placeholder="Cerca utente per nome..."
+          value={ricerca}
+          onChange={(e) => {
+            setPagina(0)
+            setRicerca(e.target.value)
+          }}
+        />
         <Table striped hover className="p-0">
           <thead>
             <tr>
@@ -98,7 +109,11 @@ const Utenti = () => {
                   <p>{utente.email}</p>
                 </td>
                 <td>
-                  {utente.ruoli[0]?.nome}, {utente.ruoli[1]?.nome}
+                  {utente.ruoli.map((ruolo) => (
+                    <span key={ruolo.id}>
+                      {ruolo.nome.replace("ROLE_", "")}{" "}
+                    </span>
+                  ))}
                 </td>
                 <td>
                   <Button
