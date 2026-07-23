@@ -10,3 +10,17 @@ export function updateMe(body) {
     body: JSON.stringify(body),
   })
 }
+
+export const getAllUtenti = () => {
+  return apiRequest("/utenti", "GET")
+}
+
+export const addRole = (utenteId, ruoloId) =>
+  apiRequest(`/utenti/${utenteId}/ruoli/${ruoloId}`, {
+    method: "POST",
+  })
+
+export const removeRole = (utenteId, ruoloId) =>
+  apiRequest(`/utenti/${utenteId}/ruoli/${ruoloId}`, {
+    method: "DELETE",
+  })
