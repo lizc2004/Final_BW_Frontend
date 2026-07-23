@@ -12,10 +12,18 @@ export async function apiRequest(endpoint, options = {}) {
     config.headers.Authorization = `Bearer ${token}`
   }
   const response = await fetch(BASE_URL + endpoint, config)
+
+  // Le risposte 204 (es. DELETE) non hanno body: niente da leggere come JSON.
+  if (response.status === 204) {
+    if (!response.ok) {
+      throw new Error("Errore nella richiesta")
+    }
+    return null
+  }
+
   const data = await response.json()
   if (!response.ok) {
     throw new Error(data.message || "Errore nella richiesta")
   }
-  console.log(data)
   return data
 }

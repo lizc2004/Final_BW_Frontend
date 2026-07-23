@@ -9,6 +9,16 @@
   color: white;
 }
 
+/* Su mobile la sidebar si impila sopra al contenuto
+   (vedi media query in DashboardLayout.css): qui basta
+   che occupi tutta la larghezza invece dei 260px fissi. */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+}
+
 /* Link della Sidebar */
 .sidebar-link {
   padding: 12px 16px;
