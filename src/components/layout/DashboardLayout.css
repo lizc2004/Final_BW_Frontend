@@ -20,3 +20,12 @@
   padding: 30px;
   overflow-y: auto;
 }
+
+/* Sotto una certa larghezza, sidebar e contenuto si impilano
+   invece di stare affiancati (la sidebar ha larghezza fissa
+   e altrimenti schiaccerebbe il contenuto su mobile). */
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+}

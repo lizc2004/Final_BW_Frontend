@@ -1,2 +1,14 @@
-.stati-fattura {
+.stati-fattura-page {
+  width: 100%;
+  max-width: 600px;
+}
+
+.stati-fattura-page h1 {
+  margin-bottom: 1.5rem;
+}
+
+.stati-fattura-page .stato-badge {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5em 0.9em;
 }

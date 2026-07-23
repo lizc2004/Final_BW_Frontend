@@ -1,4 +1,5 @@
 import { Badge, Button } from "react-bootstrap"
+import { formatNomeStato, coloreStato } from "../../../utils/statoFatturaFormat"
 
 const formatImporto = (importo) =>
   new Intl.NumberFormat("it-IT", {
@@ -14,7 +15,9 @@ const FatturaRow = ({ fattura, onModifica, onElimina }) => {
       <td>{fattura.data}</td>
       <td>{formatImporto(fattura.importo)}</td>
       <td>
-        <Badge bg="secondary">{fattura.statoFattura?.nome}</Badge>
+        <Badge bg={coloreStato(fattura.statoFattura?.nome)}>
+          {formatNomeStato(fattura.statoFattura?.nome)}
+        </Badge>
       </td>
       <td className="text-end">
         <Button
