@@ -16,5 +16,6 @@ export async function apiRequest(endpoint, options = {}) {
   if (!response.ok) {
     throw new Error(data.message || "Errore nella richiesta")
   }
+  console.log(data)
   return data
 }
