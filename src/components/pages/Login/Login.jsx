@@ -1,33 +1,33 @@
-import { useState } from "react";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import { useState } from "react"
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
+import "./Login.css"
 
 const Login = () => {
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ username: "", password: "" })
   const [alertInfo, setAlertInfo] = useState({
     show: false,
     variant: "",
     message: "",
-  });
-  const [loading, setLoading] = useState(false);
+  })
+  const [loading, setLoading] = useState(false)
 
-  const navigate = useNavigate();
-  const BASE_URL = "http://localhost:8080";
+  const navigate = useNavigate()
+  const BASE_URL = "http://localhost:8080"
 
   // Gestione cambio campi input
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
   // Submit del Form
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setAlertInfo({ show: false, variant: "", message: "" });
-    setLoading(true);
+    e.preventDefault()
+    setAlertInfo({ show: false, variant: "", message: "" })
+    setLoading(true)
 
     try {
       const response = await fetch(`${BASE_URL}/api/auth/login`, {
@@ -36,57 +36,57 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      });
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (response.ok) {
-        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("accessToken", data.accessToken)
 
         setAlertInfo({
           show: true,
           variant: "success",
           message: "Login effettuato con successo! Reindirizzamento...",
-        });
+        })
 
         setTimeout(() => {
-          navigate("/clienti");
-        }, 1000);
+          navigate("/clienti")
+        }, 1000)
       } else {
         setAlertInfo({
           show: true,
           variant: "danger",
           message: data.message || "Credenziali non valide. Riprova.",
-        });
+        })
       }
     } catch (error) {
-      console.error("Errore di connessione:", error);
+      console.error("Errore di connessione:", error)
       setAlertInfo({
         show: true,
         variant: "danger",
         message: "Impossibile connettersi al server backend.",
-      });
+      })
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   // Autocompilazione per i pulsanti Demo
   const fillDemo = (role) => {
     switch (role) {
       case "admin":
-        setFormData({ username: "admin@epic.energy", password: "admin123" });
-        break;
+        setFormData({ username: "admin@epic.energy", password: "admin123" })
+        break
       case "user":
         setFormData({
           username: "user@epic.energy",
           password: "user123",
-        });
-        break;
+        })
+        break
       default:
-        break;
+        break
     }
-  };
+  }
 
   return (
     <Container fluid className="p-0 vh-100 login-wrapper">
@@ -212,7 +212,7 @@ const Login = () => {
         </Col>
       </Row>
     </Container>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

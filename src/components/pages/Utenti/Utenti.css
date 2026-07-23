@@ -1,2 +1,7 @@
-.utenti {
+.active .page-link {
+  background-color: green;
+}
+
+.page-link {
+  color: black;
 }
