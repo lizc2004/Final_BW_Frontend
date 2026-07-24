@@ -119,9 +119,12 @@ const FatturaFormModal = ({
               required
             >
               <option value="">Seleziona un cliente</option>
-              {clienti.map((cliente) => (
+              {( Array.isArray(clienti)
+                 ? clienti
+                 : clienti?.content || []
+               ).map((cliente) => (
                 <option key={cliente.id} value={cliente.id}>
-                  {cliente.ragioneSociale}
+                {cliente.ragioneSociale}
                 </option>
               ))}
             </Form.Select>

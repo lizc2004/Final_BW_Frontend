@@ -26,8 +26,8 @@ const Panoramica = () => {
       }
 
       try {
-        const listaClienti = await getClienti()
-        setClienti(listaClienti)
+        const paginaClienti = await getClienti(0, 1)
+        setClienti(paginaClienti.totalElements ?? 0)
       } catch {
         setClienti(null)
       }
@@ -68,7 +68,7 @@ const Panoramica = () => {
               <Card className="kpi-card">
                 <Card.Body>
                   <div className="kpi-value">
-                    {clienti === null ? "—" : clienti.length}
+                    {clienti === null ? "—" : clienti}
                   </div>
                   <Card.Text className="kpi-label mb-0">
                     Clienti totali

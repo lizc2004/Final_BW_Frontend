@@ -54,7 +54,7 @@ const Sidebar = ({ role }) => {
   return (
     <aside className="sidebar d-flex flex-column">
       {/* Nome del gestionale, cliccabile per tornare alla Panoramica */}
-      <NavLink to="/" className="sidebar-brand mb-5 text-decoration-none">
+      <NavLink to="/panoramica" className="sidebar-brand mb-5 text-decoration-none">
         <h2 className="h5 mb-1">EPIC Energy CRM</h2>
 
         <p className="small mb-0">
@@ -69,8 +69,7 @@ const Sidebar = ({ role }) => {
          * sia all'Operatore.
          */}
         <NavLink
-          to="/"
-          end
+          to="/panoramica"
           className={getLinkClass}
         >
           <BsHouseDoor />

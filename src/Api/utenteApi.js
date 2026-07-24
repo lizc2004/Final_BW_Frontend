@@ -23,3 +23,10 @@ export const removeRole = (utenteId, ruoloId) =>
 
 export const getAllUtenti = (page = 0, size = 5, nome = "") =>
   apiRequest(`/utenti?page=${page}&size=${size}&nome=${nome}`)
+
+export function registerUtente(body) {
+  return apiRequest("/utenti", {
+    method: "POST",
+    body: JSON.stringify(body),
+  })
+}

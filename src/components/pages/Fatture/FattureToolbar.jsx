@@ -21,9 +21,12 @@ const FattureToolbar = ({
           onChange={handleChange}
         >
           <option value="">Tutti</option>
-          {clienti.map((cliente) => (
+          {(Array.isArray(clienti)
+            ? clienti
+            : clienti?.content || []
+            ).map((cliente) => (
             <option key={cliente.id} value={cliente.id}>
-              {cliente.ragioneSociale}
+            {cliente.ragioneSociale}
             </option>
           ))}
         </Form.Select>
