@@ -1,43 +1,43 @@
-import { useState } from "react";
-import { Card, Form, Button, Alert, Spinner } from "react-bootstrap";
+import { useState } from "react"
+import { Card, Form, Button, Alert, Spinner } from "react-bootstrap"
 
 const SendEmailForm = ({ token: propToken }) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [foundCliente, setFoundCliente] = useState(null);
-  const [searchError, setSearchError] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("")
+  const [foundCliente, setFoundCliente] = useState(null)
+  const [searchError, setSearchError] = useState("")
+  const [isSearching, setIsSearching] = useState(false)
 
   const [formData, setFormData] = useState({
     oggetto: "Rinnovo contratto fornitura energia 2026",
     messaggio: `Gentile referente,\n\nle scriviamo in merito al rinnovo del contratto di fornitura per l'anno 2026. Restiamo a disposizione per un incontro.\n\nCordiali saluti,\nEPIC Energy Services`,
-  });
+  })
 
   const [status, setStatus] = useState({
     loading: false,
     success: null,
     error: null,
-  });
+  })
 
   const getToken = () => {
     return (
       propToken ||
       localStorage.getItem("accessToken") ||
       localStorage.getItem("token")
-    );
-  };
+    )
+  }
 
   const handleSearchCliente = async () => {
-    if (!searchQuery.trim()) return;
+    if (!searchQuery.trim()) return
 
-    setIsSearching(true);
-    setSearchError("");
-    setFoundCliente(null);
+    setIsSearching(true)
+    setSearchError("")
+    setFoundCliente(null)
 
-    const jwtToken = getToken();
+    const jwtToken = getToken()
 
     try {
       const response = await fetch(
-        `http://localhost:8080/clienti/cerca?query=${encodeURIComponent(searchQuery)}`,
+        `http://localhost:8080/clienti/cerca?query=${encodeURIComponent(searchQuery.trim())}`,
         {
           method: "GET",
           headers: {
@@ -45,47 +45,47 @@ const SendEmailForm = ({ token: propToken }) => {
             ...(jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {}),
           },
         },
-      );
+      )
 
       if (response.status === 401) {
         throw new Error(
           "Sessione scaduta o non autorizzata. Effettua nuovamente il login.",
-        );
+        )
       }
 
       if (!response.ok) {
-        throw new Error("Cliente non trovato.");
+        throw new Error("Cliente non trovato.")
       }
 
-      const cliente = await response.json();
-      setFoundCliente(cliente);
+      const cliente = await response.json()
+      setFoundCliente(cliente)
     } catch (err) {
-      setSearchError(err.message || "Errore nella ricerca del cliente.");
+      setSearchError(err.message || "Errore nella ricerca del cliente.")
     } finally {
-      setIsSearching(false);
+      setIsSearching(false)
     }
-  };
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!foundCliente || !foundCliente.id) {
       setStatus({
         loading: false,
         success: null,
         error: "Cerca e seleziona prima un cliente valido.",
-      });
-      return;
+      })
+      return
     }
 
-    setStatus({ loading: true, success: null, error: null });
+    setStatus({ loading: true, success: null, error: null })
 
-    const jwtToken = getToken();
+    const jwtToken = getToken()
 
     try {
       const response = await fetch(
@@ -101,21 +101,21 @@ const SendEmailForm = ({ token: propToken }) => {
             messaggio: formData.messaggio,
           }),
         },
-      );
+      )
 
       if (!response.ok) {
-        throw new Error("Errore durante l'invio dell'email.");
+        throw new Error("Errore durante l'invio dell'email.")
       }
 
       setStatus({
         loading: false,
         success: `Email inviata con successo a ${foundCliente.ragioneSociale || foundCliente.nome}!`,
         error: null,
-      });
+      })
     } catch (err) {
-      setStatus({ loading: false, success: null, error: err.message });
+      setStatus({ loading: false, success: null, error: err.message })
     }
-  };
+  }
 
   return (
     <Card
@@ -213,7 +213,7 @@ const SendEmailForm = ({ token: propToken }) => {
         </Form>
       </Card.Body>
     </Card>
-  );
-};
+  )
+}
 
-export default SendEmailForm;
+export default SendEmailForm
