@@ -1,6 +1,6 @@
 // NavLink permette di navigare tra le pagine
 // e riconosce automaticamente il collegamento attivo
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 // Importo le icone utilizzate nella Sidebar
 import {
@@ -28,6 +28,8 @@ import "./Sidebar.css";
  * "operator"
  */
 const Sidebar = ({ role }) => {
+  const navigate = useNavigate();
+
   /*
    * Funzione che assegna le classi CSS ai NavLink.
    *
@@ -39,6 +41,15 @@ const Sidebar = ({ role }) => {
     `sidebar-link d-flex align-items-center gap-3 ${
       isActive ? "active-link" : ""
     }`;
+
+  /*
+   * Rimuove il token salvato al login e riporta l'utente
+   * alla pagina di accesso.
+   */
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/login");
+  };
 
   return (
     <aside className="sidebar d-flex flex-column">
@@ -142,6 +153,7 @@ const Sidebar = ({ role }) => {
         <Button
           variant="outline-light"
           className="w-100 d-flex align-items-center justify-content-center gap-2"
+          onClick={handleLogout}
         >
           <BsBoxArrowLeft />
 
