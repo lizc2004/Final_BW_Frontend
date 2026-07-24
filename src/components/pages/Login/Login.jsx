@@ -50,7 +50,7 @@ const Login = () => {
         })
 
         setTimeout(() => {
-          navigate("/clienti")
+          navigate("/panoramica")
         }, 1000)
       } else {
         setAlertInfo({
