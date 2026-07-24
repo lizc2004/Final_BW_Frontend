@@ -6,6 +6,7 @@ import { updateMe } from "../../../Api/utenteApi"
 import { Col, Container, Pagination, Row, Table } from "react-bootstrap"
 import { Modal, Button } from "react-bootstrap"
 import { addRole, removeRole } from "../../../Api/utenteApi"
+import CreaUtenteModal from "./CreaUtenteModal"
 
 const Utenti = () => {
   const [utenti, setUtenti] = useState([])
@@ -14,6 +15,7 @@ const Utenti = () => {
   const [pagina, setPagina] = useState(0)
   const [totalePagine, setTotalePagine] = useState(0)
   const [ricerca, setRicerca] = useState("")
+  const [showCreateModal, setShowCreateModal] = useState(false)
 
   const apriGestioneRuoli = (utente) => {
     setUtenteSelezionato(utente)
@@ -76,16 +78,25 @@ const Utenti = () => {
   return (
     <>
       <Container fluid className="mw-100 p-0">
-        <input
-          type="text"
-          className="form-control mb-3"
-          placeholder="Cerca utente per nome..."
-          value={ricerca}
-          onChange={(e) => {
-            setPagina(0)
-            setRicerca(e.target.value)
-          }}
-        />
+        <Row>
+          <Col xs={12} sm={9}>
+            <input
+              type="text"
+              className="form-control mb-3"
+              placeholder="Cerca utente per nome..."
+              value={ricerca}
+              onChange={(e) => {
+                setPagina(0)
+                setRicerca(e.target.value)
+              }}
+            />
+          </Col>
+          <Col className="text-end" xs={12} sm={3}>
+            <Button variant="success" onClick={() => setShowCreateModal(true)}>
+              + Crea Utente
+            </Button>
+          </Col>
+        </Row>
         <Table striped hover className="p-0">
           <thead>
             <tr>
@@ -188,6 +199,16 @@ const Utenti = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <CreaUtenteModal
+        show={showCreateModal}
+        handleClose={() => {
+          setShowCreateModal(false)
+        }}
+        refresh={() => {
+          caricaUtenti(pagina)
+        }}
+      />
     </>
   )
 }
