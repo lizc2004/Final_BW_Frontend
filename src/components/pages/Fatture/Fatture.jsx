@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react"
-import { Spinner, Alert } from "react-bootstrap"
+import { Spinner, Alert, Pagination } from "react-bootstrap"
 import FattureToolbar from "./FattureToolbar"
 import FattureTable from "./FattureTable"
 import FatturaFormModal from "./FatturaFormModal"
@@ -7,6 +7,8 @@ import { getFatture, createFattura, updateFattura, deleteFattura } from "../../.
 import { getStatiFattura } from "../../../Api/statoFatturaApi"
 import { getClienti } from "../../../Api/clienteApi"
 import "./Fatture.css"
+
+const DIMENSIONE_PAGINA = 10
 
 const emptyFilters = {
   clienteId: "",
@@ -26,18 +28,27 @@ const Fatture = () => {
   const [showModal, setShowModal] = useState(false)
   const [fatturaDaModificare, setFatturaDaModificare] = useState(null)
 
+  // Spring considera la prima pagina come pagina 0.
+  const [paginaCorrente, setPaginaCorrente] = useState(0)
+  const [pagineTotali, setPagineTotali] = useState(0)
+
   const caricaFatture = useCallback(async () => {
     setCaricamento(true)
     setErrore("")
     try {
-      const pagina = await getFatture(filters)
+      const pagina = await getFatture({
+        ...filters,
+        page: paginaCorrente,
+        size: DIMENSIONE_PAGINA,
+      })
       setFatture(pagina.content ?? [])
+      setPagineTotali(pagina.totalPages ?? 0)
     } catch (err) {
       setErrore(err.message)
     } finally {
       setCaricamento(false)
     }
-  }, [filters])
+  }, [filters, paginaCorrente])
 
   useEffect(() => {
     // Cliente e stati servono per i menu a tendina di filtro e form:
@@ -49,6 +60,12 @@ const Fatture = () => {
   useEffect(() => {
     caricaFatture()
   }, [caricaFatture])
+
+  // Ogni cambio di filtro riparte dalla prima pagina.
+  const handleFilterChange = (nuoviFiltri) => {
+    setPaginaCorrente(0)
+    setFilters(nuoviFiltri)
+  }
 
   const apriNuovaFattura = () => {
     setFatturaDaModificare(null)
@@ -89,7 +106,7 @@ const Fatture = () => {
         clienti={clienti}
         statiFattura={statiFattura}
         filters={filters}
-        onFilterChange={setFilters}
+        onFilterChange={handleFilterChange}
         onNuovaFattura={apriNuovaFattura}
       />
 
@@ -102,11 +119,37 @@ const Fatture = () => {
       {caricamento ? (
         <Spinner animation="border" size="sm" />
       ) : (
-        <FattureTable
-          fatture={fatture}
-          onModifica={apriModificaFattura}
-          onElimina={eliminaFattura}
-        />
+        <>
+          <FattureTable
+            fatture={fatture}
+            onModifica={apriModificaFattura}
+            onElimina={eliminaFattura}
+          />
+
+          {pagineTotali > 0 && (
+            <Pagination className="justify-content-center mt-4">
+              <Pagination.Prev
+                disabled={paginaCorrente === 0}
+                onClick={() => setPaginaCorrente((pagina) => pagina - 1)}
+              />
+
+              {[...Array(pagineTotali).keys()].map((numeroPagina) => (
+                <Pagination.Item
+                  key={numeroPagina}
+                  active={numeroPagina === paginaCorrente}
+                  onClick={() => setPaginaCorrente(numeroPagina)}
+                >
+                  {numeroPagina + 1}
+                </Pagination.Item>
+              ))}
+
+              <Pagination.Next
+                disabled={paginaCorrente === pagineTotali - 1}
+                onClick={() => setPaginaCorrente((pagina) => pagina + 1)}
+              />
+            </Pagination>
+          )}
+        </>
       )}
 
       <FatturaFormModal
