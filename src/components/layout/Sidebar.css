@@ -52,7 +52,14 @@
   font-size: 1.1rem;
 }
 
-/* Titolo del gestionale */
+/* Titolo del gestionale, cliccabile per tornare alla Panoramica */
+.sidebar .sidebar-brand,
+.sidebar .sidebar-brand:hover {
+  display: block;
+  color: white;
+  cursor: pointer;
+}
+
 .sidebar h2 {
   font-weight: 700;
 }

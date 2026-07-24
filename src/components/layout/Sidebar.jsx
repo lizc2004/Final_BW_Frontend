@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 
 // Importo le icone utilizzate nella Sidebar
 import {
+  BsHouseDoor,
   BsPeople,
   BsReceipt,
   BsPersonGear,
@@ -41,17 +42,31 @@ const Sidebar = ({ role }) => {
 
   return (
     <aside className="sidebar d-flex flex-column">
-      {/* Nome del gestionale */}
-      <div className="mb-5">
+      {/* Nome del gestionale, cliccabile per tornare alla Panoramica */}
+      <NavLink to="/" className="sidebar-brand mb-5 text-decoration-none">
         <h2 className="h5 mb-1">EPIC Energy CRM</h2>
 
         <p className="small mb-0">
           Gestione aziendale
         </p>
-      </div>
+      </NavLink>
 
       {/* Navigazione principale della Sidebar */}
       <nav className="d-flex flex-column gap-2">
+        {/*
+         * Panoramica è visibile sia all'Admin
+         * sia all'Operatore.
+         */}
+        <NavLink
+          to="/"
+          end
+          className={getLinkClass}
+        >
+          <BsHouseDoor />
+
+          <span>Panoramica</span>
+        </NavLink>
+
         {/*
          * Clienti è visibile sia all'Admin
          * sia all'Operatore.
