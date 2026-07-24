@@ -1,11 +1,21 @@
 import "./Utenti.css"
 
 import { useEffect, useState } from "react"
-import { getAllUtenti, getMyProfile } from "../../../Api/utenteApi"
-import { updateMe } from "../../../Api/utenteApi"
-import { Col, Container, Pagination, Row, Table } from "react-bootstrap"
-import { Modal, Button } from "react-bootstrap"
-import { addRole, removeRole } from "../../../Api/utenteApi"
+import {
+  addRole,
+  getAllUtenti,
+  removeRole,
+} from "../../../Api/utenteApi"
+
+import {
+  Button,
+  Col,
+  Container,
+  Modal,
+  Pagination,
+  Row,
+  Table,
+} from "react-bootstrap"
 import CreaUtenteModal from "./CreaUtenteModal"
 
 const Utenti = () => {
