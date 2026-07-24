@@ -36,7 +36,7 @@ const Navbar = ({ role, setRole }) => {
    * al titolo e al sottotitolo da mostrare nella Navbar.
    */
   const pageInfo = {
-  "/": {
+  "/panoramica": {
     title: "Panoramica",
     subtitle: "Riepilogo generale del gestionale",
   },
