@@ -1,2 +1,33 @@
 .panoramica {
+  width: 100%;
+}
+
+.panoramica h1 {
+  margin-bottom: 1.5rem;
+}
+
+.panoramica .kpi-card {
+  text-align: center;
+  height: 100%;
+}
+
+.panoramica .kpi-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #184d47;
+}
+
+.panoramica .kpi-label {
+  color: #6c757d;
+}
+
+.panoramica .kpi-hint {
+  font-size: 0.75rem;
+  color: #adb5bd;
+}
+
+.panoramica .stato-badge {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5em 0.9em;
 }
