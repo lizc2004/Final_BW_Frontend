@@ -1,11 +1,6 @@
 import { Badge, Button } from "react-bootstrap"
 import { formatNomeStato, coloreStato } from "../../../utils/statoFatturaFormat"
-
-const formatImporto = (importo) =>
-  new Intl.NumberFormat("it-IT", {
-    style: "currency",
-    currency: "EUR",
-  }).format(importo)
+import { formatImporto } from "../../../utils/currency"
 
 const FatturaRow = ({ fattura, onModifica, onElimina }) => {
   return (
